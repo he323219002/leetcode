@@ -22,20 +22,18 @@ class Solution:
                 if j >= s_len:
                     break
 
-                if i + 1 == j:
-                    if s[i] == s[j]:
-                        dp[i][j] = True
-                        continue
-
                 if s[i] == s[j]:
-                    dp[i][j] = dp[i + 1][j - 1]
+                    if i + 1 == j:
+                        dp[i][j] = True
+                    else:
+                        dp[i][j] = dp[i + 1][j - 1]
 
-                if dp[i][j] and j - i > max_len:
-                    max_len = j - i + 1
+                if dp[i][j] and l > max_len:
+                    max_len = l
                     begin = i
 
-        return s[begin:begin + max_len]
+        return s[begin:begin + max_len+1]
 
 
-res = Solution.longestPalindrome("cbbd")
+res = Solution.longestPalindrome("ababaeeeeeeees")
 print(res)
