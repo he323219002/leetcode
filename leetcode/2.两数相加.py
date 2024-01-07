@@ -1,28 +1,43 @@
-from typing import Optional
+from typing import *
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        cache = 0
+        node = dummy
+        while l1 and l2:
+            temp_val = l1.val + l2.val + cache
+            node_val = temp_val -10
+            if node_val >= 0:
+                cache = 1
+                temp_node = ListNode(temp_val - 10)
+            else:
+                cache = 0
+                temp_node = ListNode(temp_val)
+            node.next = temp_node
+            node = node.next
+            l1,l2 = l1.next,l2.next
+            if l1 and not l2:
+                l2 = ListNode(0)
+            if l2 and not l1:
+                l1 = ListNode(0)
+        if cache:
+            node.next = ListNode(1)
 
 
-def addTwoNumbers(self, l1: Optional[list], l2: Optional[list]) -> Optional[list]:
-    # 判断长度补0
-    len_dis = len(l1) - len(l2)
-    short_li = [0] * abs(len_dis)
-    short_li.extend(l1) if len_dis <= 0 else short_li.extend(l2)
-    long_li = l2 if len_dis <= 0 else l1
-    new_li = []
+        print(dummy)
+        return dummy.next
 
-    a = 0
-    for i in range(len(short_li) - 1, -1, -1):
-        # 如果进位
-        if a == 1:
-            val = short_li[i] + long_li[i] + 1
-        else:
-            val = short_li[i] + long_li[i]
-        new_li.append(str(val)[-1])
-        if val >= 10:
-            a = 1
-        else:
-            a = 0
 
-        if i == 0 and a == 1:
-            new_li.append(1)
-
-    return new_li
+a = ListNode(3)
+b = ListNode(4,a)
+c = ListNode(2,b)
+d = ListNode(4)
+e = ListNode(6,d)
+f = ListNode(5,e)
+Solution().addTwoNumbers(c,f)

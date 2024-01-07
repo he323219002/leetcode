@@ -1,4 +1,3 @@
-
-li = [1,2,3]
-li.pop(0)
-print(li)
+n = 8
+res = [0] * n + [0]
+print(res)
