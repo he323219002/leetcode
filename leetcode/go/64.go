@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 	grid := [][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}
 	minPathSum(grid)
@@ -34,6 +32,6 @@ func minPathSum(grid [][]int) int {
 			continue
 		}
 	}
-	fmt.Println(dp[row-1][col-1])
+	// fmt.Println(dp[row-1][col-1])
 	return dp[row-1][col-1]
 }
