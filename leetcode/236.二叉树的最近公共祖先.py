@@ -12,51 +12,29 @@ class Solution:
     def lowestCommonAncestor(
         self, root: "TreeNode", p: "TreeNode", q: "TreeNode"
     ) -> "TreeNode":
-        # 前序遍历 找到其中一个值，以那个节点为开始继续遍历，否则回溯上一个节点，直到都找到
-        self.res_node = None
-        self.p_res, self.q_res = False, False
+        # 递归遍历左右，根据返回值left，right
+        # 1. left = none & right = none 表示无公共节点 (题设不存在)
+        # 2. left != none & right != none 表示分布在此节点两侧 返回当前节点
+        # 3. left != none & right = none 节点为left
+        # 4. left = none & rigth != none 节点为right
 
-        def pre_search(node: TreeNode) -> TreeNode:
-            if not node:
-                return None
+        # 终止条件当前节点为none 无法继续遍历 2，找到p、 q 有对应返回
 
-            if node.val == p:
-                self.p_res = True
-            elif node.val == q:
-                self.q_res = True
-
-            if self.p_res and self.q_res:
-                return node
-
-            if node.left:
-                temp_left_res = pre_search(node.left)
-                if self.res_node != None:
-                    return node
-                if temp_left_res:
-                    self.res_node = node
-                    return node
-
-            if node.right:
-                temp_right_res = pre_search(node.right)
-                if self.res_node:
-                    return node
-                if temp_right_res:
-                    self.res_node = node
-                    return node
-
-        res = pre_search(root)
-        print(res)
+        if root == None:
+            return root
+        if root.val == p.val:
+            return p
+        if root.val == q.val:
+            return q
+        left = self.lowestCommonAncestor(root.left,p,q)
+        right = self.lowestCommonAncestor(root.right,p,q)
 
 
-root = TreeNode(1)
-
-# 创建左子树
-root.left = TreeNode(2)
-root.left.left = TreeNode(3)
-root.left.right = TreeNode(4)
-
-# 创建右子树
-root.right = TreeNode(5)
-root.right.left = TreeNode(6)
-root.right.right = TreeNode(7)
-Solution().lowestCommonAncestor(root, 6, 2)
+        if left != None and right != None:
+            return root
+        if left != None and right == None:
+            return left
+        if left == None and right != None:
+            return right
+        
+Solution().lowestCommonAncestor(None,None,None)
